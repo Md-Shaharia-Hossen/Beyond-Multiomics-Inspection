@@ -698,40 +698,131 @@ Gaussian perturbations were introduced at four noise levels.
 
 ---
 
+## 10. Ablation Study
+
+### 10.1 Methylation Ablation Results
+
+| Method           | Noise Samples | Noise % | LOF Outliers | LOF % | Isolation Forest |   IF % |
+| ---------------- | ------------: | ------: | -----------: | ----: | ---------------: | -----: |
+| HDBSCAN          |            74 |  56.06% |            — |     — |                — |      — |
+| LOF              |             — |       — |            3 | 2.27% |                — |      — |
+| Isolation Forest |             — |       — |            — |     — |               14 | 10.61% |
+
+### 10.2 mRNA Ablation Results
+
+| Method           | Noise Samples | Noise % | LOF Outliers | LOF % | Isolation Forest |   IF % |
+| ---------------- | ------------: | ------: | -----------: | ----: | ---------------: | -----: |
+| HDBSCAN          |             4 |   3.03% |            — |     — |                — |      — |
+| LOF              |             — |       — |            1 | 0.76% |                — |      — |
+| Isolation Forest |             — |       — |            — |     — |               14 | 10.61% |
+
+### 10.3 miRNA Ablation Results
+
+| Method           | Noise Samples | Noise % | LOF Outliers | LOF % | Isolation Forest |  IF % |
+| ---------------- | ------------: | ------: | -----------: | ----: | ---------------: | ----: |
+| HDBSCAN          |            83 |  62.88% |            — |     — |                — |     — |
+| LOF              |             — |       — |            5 | 3.79% |                — |     — |
+| Isolation Forest |             — |       — |            — |     — |               11 | 8.33% |
+
+---
+
+### 10.4 Controlled Technical-Noise Ablation
+
+#### Methylation
+
+| Gaussian Noise (σ) | Mean MAE | Median MAE |  Max MAE |
+| -----------------: | -------: | ---------: | -------: |
+|               0.10 | 0.421909 |   0.413542 | 0.986248 |
+|               0.25 | 0.469215 |   0.457157 | 1.008841 |
+|               0.50 | 0.595384 |   0.581756 | 1.078694 |
+|               1.00 | 0.923746 |   0.908509 | 1.316851 |
+
+#### mRNA
+
+| Gaussian Noise (σ) | Mean MAE | Median MAE |  Max MAE |
+| -----------------: | -------: | ---------: | -------: |
+|               0.10 | 0.461856 |   0.476109 | 0.862151 |
+|               0.25 | 0.502348 |   0.516643 | 0.881504 |
+|               0.50 | 0.619095 |   0.622135 | 0.943461 |
+|               1.00 | 0.936190 |   0.928163 | 1.174191 |
+
+#### miRNA
+
+| Gaussian Noise (σ) | Mean MAE | Median MAE |  Max MAE |
+| -----------------: | -------: | ---------: | -------: |
+|               0.10 | 0.562563 |   0.533822 | 1.091633 |
+|               0.25 | 0.594864 |   0.563012 | 1.114717 |
+|               0.50 | 0.695288 |   0.665127 | 1.179524 |
+|               1.00 | 0.989116 |   0.965263 | 1.389649 |
+
+---
+
+### 10.5 Noise-Level Ablation: RMSE
+
+| Gaussian Noise (σ) | Methylation |     mRNA |    miRNA |
+| -----------------: | ----------: | -------: | -------: |
+|               0.10 |    0.269079 | 0.289209 | 0.419625 |
+|               0.25 |           — |        — |        — |
+|               0.50 |           — |        — |        — |
+|               1.00 |           — |        — |        — |
+
+---
+
+### 10.6 HDBSCAN Noise-Label Association
+
+| Modality    | Noise Samples | Clustered Samples |      χ² | df |  P-value | Cramér's V |
+| ----------- | ------------: | ----------------: | ------: | -: | -------: | ---------: |
+| Methylation |            45 |                87 | 56.0828 |  4 | 1.93e-11 |     0.6304 |
+| mRNA        |             2 |               130 | 18.4462 |  4 | 1.01e-03 |     0.3317 |
+| miRNA       |            29 |               103 | 12.4102 |  4 | 1.45e-02 |     0.2529 |
+
+---
+
+### 10.7 Fisher's Exact Test for Label-Specific Associations
+
+| Modality    | Label   | Adjusted P-value |
+| ----------- | ------- | ---------------: |
+| Methylation | Label 1 |                0 |
+| Methylation | Label 3 |                0 |
+| mRNA        | None    |           > 0.05 |
+| miRNA       | Label 1 |         0.022327 |
+| miRNA       | Label 3 |         0.048850 |
+
+---
+
 ### 10.8 Residual–GLOSH Ablation
 
-| Modality | MAE–GLOSH ρ | P-value | RMSE–GLOSH ρ | P-value |
-|---|---:|---:|---:|---:|
-| Methylation | 0.586728 | 1.44e-13 | 0.598974 | 3.29e-14 |
-| mRNA | 0.297814 | 5.24e-04 | 0.293503 | 6.37e-04 |
-| miRNA | 0.600381 | 2.76e-14 | 0.609015 | 9.35e-15 |
+| Modality    | MAE–GLOSH ρ |  P-value | RMSE–GLOSH ρ |  P-value |
+| ----------- | ----------: | -------: | -----------: | -------: |
+| Methylation |    0.586728 | 1.44e-13 |     0.598974 | 3.29e-14 |
+| mRNA        |    0.297814 | 5.24e-04 |     0.293503 | 6.37e-04 |
+| miRNA       |    0.600381 | 2.76e-14 |     0.609015 | 9.35e-15 |
 
 ---
 
 ### 10.9 Ablation Residual Statistics
 
-| Modality | Mean MAE | Median MAE | SD | Min | Max |
-|---|---:|---:|---:|---:|---:|
-| Methylation | 0.213937 | 0.209784 | 0.070156 | 0.079866 | 0.403155 |
-| mRNA | 0.230708 | 0.220124 | 0.067634 | 0.104455 | 0.454712 |
-| miRNA | 0.330487 | 0.315969 | 0.096035 | 0.184467 | 0.677967 |
+| Modality    | Mean MAE | Median MAE |       SD |      Min |      Max |
+| ----------- | -------: | ---------: | -------: | -------: | -------: |
+| Methylation | 0.213937 |   0.209784 | 0.070156 | 0.079866 | 0.403155 |
+| mRNA        | 0.230708 |   0.220124 | 0.067634 | 0.104455 | 0.454712 |
+| miRNA       | 0.330487 |   0.315969 | 0.096035 | 0.184467 | 0.677967 |
 
 ### 10.10 Ablation RMSE Statistics
 
-| Modality | Mean RMSE | Median RMSE | SD | Min | Max |
-|---|---:|---:|---:|---:|---:|
-| Methylation | 0.269079 | 0.264103 | 0.088269 | 0.101919 | 0.509607 |
-| mRNA | 0.289209 | 0.276246 | 0.084216 | 0.129965 | 0.569005 |
-| miRNA | 0.419625 | 0.400220 | 0.121568 | 0.230163 | 0.840455 |
+| Modality    | Mean RMSE | Median RMSE |       SD |      Min |      Max |
+| ----------- | --------: | ----------: | -------: | -------: | -------: |
+| Methylation |  0.269079 |    0.264103 | 0.088269 | 0.101919 | 0.509607 |
+| mRNA        |  0.289209 |    0.276246 | 0.084216 | 0.129965 | 0.569005 |
+| miRNA       |  0.419625 |    0.400220 | 0.121568 | 0.230163 | 0.840455 |
 
 ---
 
 ### 10.11 Maximum Feature Error
 
-| Modality | Mean Max Feature Error | Maximum |
-|---|---:|---:|
-| Methylation | 0.930586 | 1.817833 |
-| mRNA | 0.986129 | 2.083496 |
-| miRNA | 1.447269 | 3.110385 |
-```
+| Modality    | Mean Max Feature Error |  Maximum |
+| ----------- | ---------------------: | -------: |
+| Methylation |               0.930586 | 1.817833 |
+| mRNA        |               0.986129 | 2.083496 |
+| miRNA       |               1.447269 | 3.110385 |
 

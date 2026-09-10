@@ -1,5 +1,10 @@
-# Beyond-Technical-Artifacts-Multi-Omics-Data
 # Supplementary Materials
+## License
+Copyright © 2026 **Md Shaharia Hossen**.
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for the full license text.
+
+The MIT License permits use, copying, modification, merging, publishing, distribution, sublicensing, and sale of copies of the software, subject to the license conditions.
 
 ```markdown
 # Results
